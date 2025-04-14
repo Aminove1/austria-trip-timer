@@ -16,8 +16,8 @@
     #background {
       position: fixed;
       top: 0; left: 0;
-      width: 100%;
-      height: 100%;
+      width: 100vw;
+      height: 100vh;
       background-image: url("background.jpg");
       background-size: cover;
       background-position: center;
@@ -31,21 +31,22 @@
       transform: translate(-50%, -50%);
       color: #fff;
       text-shadow: 2px 2px 6px #000;
-      font-size: 2.5em;
+      font-size: clamp(1.2em, 4vw, 2.5em);
       z-index: 2;
       text-align: center;
+      padding: 0 10px;
     }
 
     #hourglass {
-      font-size: 3em;
+      font-size: 2.5em;
       display: block;
       margin-bottom: 0.3em;
     }
 
     #family {
       position: absolute;
-      bottom: 60px;
-      height: 180px;
+      bottom: 5vh;
+      height: 25vh;
       transition: left 1s linear;
       animation: bounce 1.5s infinite;
       z-index: 1;
@@ -90,7 +91,7 @@
         `הטיול מתחיל בעוד ${days} ימים, ${hours} שעות, ${minutes} דקות ו-${seconds} שניות`;
 
       const screenWidth = window.innerWidth;
-      const maxLeft = screenWidth - 180;
+      const maxLeft = screenWidth - document.getElementById("family").offsetWidth;
       const leftPos = (percent / 100) * maxLeft;
 
       const family = document.getElementById("family");
