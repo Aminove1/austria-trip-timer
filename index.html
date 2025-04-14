@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>אנחנו בדרך לאוסטריה!</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      font-family: "Segoe UI", sans-serif;
+      direction: rtl;
+      background-color: #000;
+    }
+
+    #background {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url("background.jpg");
+      background-size: cover;
+      background-position: center;
+      z-index: -2;
+    }
+
+    #overlay {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #fff;
+      text-shadow: 2px 2px 6px #000;
+      font-size: 2.5em;
+      z-index: 2;
+      text-align: center;
+    }
+
+    #hourglass {
+      font-size: 3em;
+      display: block;
+      margin-bottom: 0.3em;
+    }
+
+    #family {
+      position: absolute;
+      bottom: 60px;
+      height: 180px;
+      transition: left 1s linear;
+      animation: bounce 1.5s infinite;
+      z-index: 1;
+    }
+
+    @keyframes bounce {
+      0%, 100% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="background"></div>
+  <div id="overlay">
+    <div id="hourglass">⏳</div>
+    <div id="timerText">מחכים לטיסה...</div>
+  </div>
+  <img id="family" src="family.png" alt="משפחה">
+
+  <script>
+    const targetDate = new Date("2025-04-27T22:50:00+03:00");
+    const startDate = new Date("2025-01-01T00:00:00+03:00");
+    const totalTime = targetDate - startDate;
+
+    function updateTimer() {
+      const now = new Date();
+      const timeLeft = targetDate - now;
+      const timePassed = now - startDate;
+
+      const percent = Math.min((timePassed / totalTime) * 100, 100);
+
+      const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+      document.getElementById("timerText").innerText =
+        `הטיול מתחיל בעוד ${days} ימים, ${hours} שעות, ${minutes} דקות ו-${seconds} שניות`;
+
+      const screenWidth = window.innerWidth;
+      const maxLeft = screenWidth - 180;
+      const leftPos = (percent / 100) * maxLeft;
+
+      const family = document.getElementById("family");
+      family.style.left = leftPos + "px";
+    }
+
+    updateTimer();
+    setInterval(updateTimer, 1000);
+  </script>
+</body>
+</html>
